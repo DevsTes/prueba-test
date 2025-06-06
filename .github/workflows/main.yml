@@ -1,0 +1,18 @@
+on: [push]  
+jobs:
+  deploy_job:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deploy files
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.FTP_SERVER}}
+          port: ${{ secrets.FTP_PORT}}
+          local_path: './static/*'
+          remote_path: '/var/www/app'
+          sftp_only: true
